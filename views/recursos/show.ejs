@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Recurso</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <h1>Detalles del Recurso</h1>
+    <p><strong>Título:</strong> <%= recurso.titulo %></p>
+    <p><strong>Autor:</strong> <%= recurso.autor %></p>
+    <p><strong>Categoría:</strong> <%= recurso.categoria %></p>
+    <p><strong>ISBN:</strong> <%= recurso.isbn %></p>
+    
+    <% if (recurso.imagen_portada) { %>
+        <p><strong>Imagen de Portada:</strong></p>
+        <img src="/uploads/<%= recurso.imagen_portada %>" alt="Portada" width="150">
+    <% } %>
+
+    <a href="/recursos">Volver a la lista</a>
+</body>
+</html>

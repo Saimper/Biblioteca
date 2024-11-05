@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Recursos</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <h1>Lista de Recursos</h1>
+    <a href="/recursos/new">Agregar nuevo recurso</a>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>Categoría</th>
+                <th>ISBN</th>
+                <th>Portada</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% recursos.forEach(recurso => { %>
+                <tr>
+                    <td><%= recurso.id %></td>
+                    <td><%= recurso.titulo %></td>
+                    <td><%= recurso.autor %></td>
+                    <td><%= recurso.categoria %></td>
+                    <td><%= recurso.isbn %></td>
+                    <td>
+                        <% if (recurso.imagen_portada) { %>
+                            <img src="/uploads/<%= recurso.imagen_portada %>" alt="Portada" width="50">
+                        <% } %>
+                    </td>
+                    <td>
+                        <a href="/recursos/<%= recurso.id %>">Ver</a> |
+                        <a href="/recursos/<%= recurso.id %>/edit">Editar</a> |
+                        <form action="/recursos/<%= recurso.id %>/delete" method="POST" style="display:inline;">
+                            <button type="submit">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</body>
+</html>
+

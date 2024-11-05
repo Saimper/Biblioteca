@@ -1,0 +1,106 @@
+/* login.css */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0; /* Fondo claro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ocupa toda la altura de la ventana */
+}
+
+.container {
+    width: 400px; /* Ajusta el ancho según necesites */
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Evita el desbordamiento */
+}
+
+.form-container {
+    display: flex;
+    transition: all 0.5s ease; /* Transición suave para el cambio de formularios */
+}
+
+.form-content {
+    padding: 20px;
+    width: 100%; /* Cada formulario ocupa el 100% del contenedor */
+}
+
+h2 {
+    text-align: center;
+    color: #333; /* Color del texto del encabezado */
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #666; /* Color de las etiquetas */
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    width: 100%; /* Los inputs llenan el contenedor */
+    padding: 10px;
+    margin-bottom: 15px; /* Espaciado inferior */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input:focus {
+    border-color: #007BFF; /* Color del borde al hacer foco */
+    outline: none; /* Sin contorno por defecto */
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF; /* Color del botón */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #0056b3; /* Color al pasar el mouse */
+}
+
+p {
+    text-align: center;
+    color: #666;
+}
+
+p a {
+    color: #007BFF; /* Color de los enlaces */
+    text-decoration: none; /* Sin subrayado */
+}
+
+p a:hover {
+    text-decoration: underline; /* Subrayado al pasar el mouse */
+}
+
+/* Estilo para mostrar los formularios */
+.form-container.active .login-form {
+    display: none; /* Oculta el formulario de login */
+}
+
+.form-container.active .register-form {
+    display: block; /* Muestra el formulario de registro */
+}
+
+.login-form {
+    display: block; /* Muestra el formulario de login por defecto */
+}
+
+.register-form {
+    display: none; /* Oculta el formulario de registro por defecto */
+}

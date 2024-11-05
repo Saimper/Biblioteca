@@ -1,0 +1,85 @@
+const db = require('../config/db');
+
+// Mostrar todos los recursos
+exports.getAllResources = (req, res) => {
+    db.query('SELECT * FROM resources', (err, results) => {
+        if (err) throw err;
+        res.render('recursos/index', { recursos: results });
+    });
+};
+
+// Mostrar formulario de creación
+exports.showCreateForm = (req, res) => {
+    res.render('recursos/create');
+};
+
+// Crear un recurso
+exports.createResource = (req, res) => {
+    // Imprimir los datos del cuerpo y el archivo
+    console.log('Datos del cuerpo:', req.body);
+    console.log('Archivo:', req.file);
+
+    const { title, author, category, isbn } = req.body;
+    const image_path = req.file ? req.file.filename : null;
+
+    // Validación básica
+    if (!title || !author || !category || !isbn || !image_path) {
+        return res.status(400).send('Todos los campos son requeridos.');
+    }
+
+    db.query(
+        'INSERT INTO resources (title, author, category, isbn, image_path) VALUES (?, ?, ?, ?, ?)',
+        [title, author, category, isbn, image_path],
+        (err, results) => {
+            if (err) throw err;
+            res.redirect('/recursos');
+        }
+    );
+};
+
+
+// Mostrar un recurso específico
+exports.getResource = (req, res) => {
+    const { id } = req.params;
+    db.query('SELECT * FROM resources WHERE id = ?', [id], (err, results) => {
+        if (err) throw err;
+        res.render('recursos/show', { recurso: results[0] });
+    });
+};
+
+// Mostrar formulario de edición
+exports.showEditForm = (req, res) => {
+    const { id } = req.params;
+    db.query('SELECT * FROM resources WHERE id = ?', [id], (err, results) => {
+        if (err) throw err;
+        res.render('recursos/edit', { recurso: results[0] });
+    });
+};
+
+// Actualizar un recurso
+exports.updateResource = (req, res) => {
+    const { id } = req.params;
+    const { title, author, category, isbn } = req.body; // Cambiado a inglés
+    const image_path = req.file ? req.file.filename : null; // Cambiado a inglés
+
+    const query = image_path
+        ? 'UPDATE resources SET title = ?, author = ?, category = ?, isbn = ?, image_path = ? WHERE id = ?' // Cambiado a inglés
+        : 'UPDATE resources SET title = ?, author = ?, category = ?, isbn = ? WHERE id = ?'; // Cambiado a inglés
+    const params = image_path
+        ? [title, author, category, isbn, image_path, id] // Cambiado a inglés
+        : [title, author, category, isbn, id]; // Cambiado a inglés
+
+    db.query(query, params, (err) => {
+        if (err) throw err;
+        res.redirect('/recursos/' + id + title + author + category + isbn + image_path);
+    });
+};
+
+// Eliminar un recurso
+exports.deleteResource = (req, res) => {
+    const { id } = req.params;
+    db.query('DELETE FROM resources WHERE id = ?', [id], (err) => {
+        if (err) throw err;
+        res.redirect('/recursos');
+    });
+};
