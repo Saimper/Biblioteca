@@ -23,14 +23,19 @@ exports.showMenu = (req, res) => {
 };
 
 exports.showMenuUser = (req, res) => {
-    // Simulando un objeto de usuario. Reemplaza esto con la lógica para obtener el usuario real.
+    // Asegúrate de que el objeto `user` esté en la sesión o de donde provenga
     const user = {
         role: req.session.role // Obtén el rol del usuario desde la sesión
     };
-
-    res.render('menuUser', {
-        title: 'Menú Usuario',
-        items: ['Item 1', 'Item 2', 'Item 3'],
-        user: user // Asegúrate de pasar el objeto user
+  
+    db.query("SELECT * FROM resources WHERE status = 'disponible'", (error, results) => {
+      if (error) {
+        console.error("Error al obtener recursos disponibles:", error);
+        return res.status(500).send("Error al cargar recursos");
+      }
+      // Pasa `user` y `recursosDisponibles` a la vista
+      res.render("menuUser", { user, recursosDisponibles: results });
     });
-};
+  };
+  
+

@@ -18,6 +18,7 @@
                 <th>Categoría</th>
                 <th>ISBN</th>
                 <th>Portada</th>
+                <th>Estado</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -29,6 +30,7 @@
                     <td><%= recurso.author %></td>
                     <td><%= recurso.category %></td>
                     <td><%= recurso.isbn %></td>
+                    <td><%= recurso.status %></td>
                     <td>
                         <% if (recurso.image_path) { %>
                             <img src="/uploads/<%= recurso.image_path %>" alt="Portada" width="50">

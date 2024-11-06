@@ -35,5 +35,6 @@
     router.get('/:id/edit', resourceController.showEditForm);
     router.post('/:id/update', upload.single('image_path'), resourceController.updateResource);
     router.post('/:id/delete', resourceController.deleteResource);
+    router.post('/reservar-recurso/:id', resourceController.reservarRecurso);
 
     module.exports = router;
