@@ -36,6 +36,7 @@
                 <th>Autor</th>
                 <th>ISBN</th>
                 <th>Estado</th>
+                <th>Portada</th>
                 <th>Acciones</th>
               </tr>
             </thead>
@@ -46,11 +47,15 @@
                   <td><%= recurso.author %></td>
                   <td><%= recurso.isbn %></td>
                   <td><%= recurso.status === 'disponible' ? 'Disponible' : 'Reservado' %></td>
+                  <td><% if (recurso.image_path) { %>
+                    <img src="/uploads/<%= recurso.image_path %>" alt="Portada">
+                <% } %></td>
                   <td>
                     <% if (recurso.status === 'disponible') { %>
                       <form action="/reservar-recurso/<%= recurso.id %>" method="POST">
                         <button type="submit">Reservar Recurso</button>
                       </form>
+                      
                     <% } else { %>
                       <span>Reservado</span>
                     <% } %>

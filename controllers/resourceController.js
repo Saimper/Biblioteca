@@ -88,3 +88,34 @@ exports.deleteResource = (req, res) => {
         res.redirect('/recursos');
     });
 };
+
+// controllers/resourceController.js
+
+// Función para reservar el recurso
+exports.reservarRecurso = (req, res) => {
+    const { id } = req.params; // Obtén el ID del recurso desde la URL
+  
+    // Verifica si el recursoId es válido
+    if (!id) {
+      return res.status(400).send("ID del recurso no proporcionado");
+    }
+  
+    // Consulta SQL para actualizar el estado del recurso a 'reservado'
+    const query = "UPDATE resources SET status = 'reservado' WHERE id = ?";
+  
+    db.query(query, [recursoId], (error, results) => {
+      if (error) {
+        console.error("Error al reservar el recurso:", error);
+        return res.status(500).send("Error al reservar el recurso");
+      }
+  
+      // Si la actualización fue exitosa, redirige a la lista de recursos
+      if (results.affectedRows === 0) {
+        return res.status(404).send("Recurso no encontrado");
+      }
+  
+      // Redirige a la lista de recursos después de reservarlo
+      res.redirect("/user/recursos");
+    });
+  };
+  
