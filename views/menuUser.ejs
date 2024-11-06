@@ -25,36 +25,46 @@
   
   
 
-      <section id="recursos" class="main-content" style="display: none">
-        <% if (user && user.role === 'usuario') { %>
-          <div class="form-container">
-            <h2>Recursos</h2>
-            <form>
-              <label for="titulo">Título:</label>
-              <input type="text" id="titulo" placeholder="Ingrese título" />
-
-              <label for="autor">Autor:</label>
-              <input type="text" id="autor" placeholder="Ingrese autor" />
-
-              <label for="isbn">ISBN:</label>
-              <input type="text" id="isbn" placeholder="Ingrese ISBN" />
-
-              <button type="submit">Agregar Recurso</button>
-            </form>
-          </div>
-        <% } else if (bibliotecario) { %>
-          <p>Acceso denegado a la sección de Recursos.</p>
-        <% } %>
-      </section>
-
-      <section id="reportes" class="main-content" style="display: none">
-        <% if (user && user.role === 'usuario') { %>
-          <h2>Reportes</h2>
-          <p>Aquí puedes generar reportes sobre los alumnos y recursos.</p>
-        <% } else if (user) { %>
-          <p>Acceso denegado a la sección de Reportes.</p>
-        <% } %>
-      </section>
+    <section id="recursos" class="main-content">
+      <% if (user && user.role === 'usuario') { %>
+        <div class="resources-container">
+          <h2>Recursos Disponibles</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>ISBN</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% recursosDisponibles.forEach((recurso) => { %>
+                <tr>
+                  <td><%= recurso.title %></td>
+                  <td><%= recurso.author %></td>
+                  <td><%= recurso.isbn %></td>
+                  <td><%= recurso.status === 'disponible' ? 'Disponible' : 'Reservado' %></td>
+                  <td>
+                    <% if (recurso.status === 'disponible') { %>
+                      <form action="/reservar-recurso/<%= recurso.id %>" method="POST">
+                        <button type="submit">Reservar Recurso</button>
+                      </form>
+                    <% } else { %>
+                      <span>Reservado</span>
+                    <% } %>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      <% } else if (bibliotecario) { %>
+        <p>Acceso denegado a la sección de Recursos.</p>
+      <% } %>
+    </section>
+    
     </div>
 
     <script>
