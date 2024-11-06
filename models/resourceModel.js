@@ -2,7 +2,7 @@ const db = require('../config/db');
 
 const Resource = {
     create: (title, author, category, isbn, imagePath, callback) => {
-        db.query('INSERT INTO resources (title, author, category, isbn, image_path) VALUES (?, ?, ?, ?, ?)', 
+        db.query('INSERT INTO resources (title, author, category, isbn, image_path, status) VALUES (?, ?, ?, ?, ?, ?)', 
             [title, author, category, isbn, imagePath], 
             callback);
     },
@@ -16,7 +16,7 @@ const Resource = {
     },
 
     update: (id, title, author, category, isbn, imagePath, callback) => {
-        db.query('UPDATE resources SET title = ?, author = ?, category = ?, isbn = ?, image_path = ? WHERE id = ?', 
+        db.query('UPDATE resources SET title = ?, author = ?, category = ?, isbn = ?, image_path = ?, status = ? WHERE id = ?', 
             [title, author, category, isbn, imagePath, id], 
             callback);
     },

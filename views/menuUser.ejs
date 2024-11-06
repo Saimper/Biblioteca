@@ -9,11 +9,11 @@
 <body>
     <aside class="sidebar">
       <div class="logo">
-        <img class="logo" src="logo_cun.png" alt="cum" />
+        <img class="logo" src="../public/logo cun.png" alt="cun" />
       </div>
       <nav class="menu">
         <% if (user && user.role === 'usuario') { %>
-            <button onclick="mostrarSeccion('alumnos')">Alumnos</button>
+            
             <button onclick="mostrarSeccion('recursos')">Recursos</button>
             <button onclick="mostrarSeccion('reportes')">Reportes</button>
         <% } else { %>
