@@ -1,27 +1,48 @@
+/* Definición de colores en root */
+:root {
+    --color-fondo: #f4f4f4;
+    --color-texto-principal: #333;
+    --color-barra-lateral: #2c3e50;
+    --color-barra-hover: #1abc9c;
+    --color-boton-menu: #34495e;
+    --color-titulo: #2c3e50;
+    --color-boton-agregar: #1abc9c;
+    --color-boton-agregar-hover: #16a085;
+    --color-tabla-header: #34495e;
+    --color-tabla-header-texto: white;
+    --color-tabla-fila-par: #ecf0f1;
+    --color-tabla-fila-impar: #f9f9f9;
+    --color-tabla-hover: #f1f1f1;
+    --color-acciones-ver: #3498db;
+    --color-acciones-editar: #f39c12;
+    --color-acciones-eliminar: #e74c3c;
+    --color-acciones-hover: #1abc9c;
+}
+
 /* Estilos básicos */
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Roboto", sans-serif;
+    background-color: var(--color-fondo);
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-    display: flex;
-    flex-direction: column;
+    color: var(--color-texto-principal);
 }
 
 /* Barra lateral */
 aside.sidebar {
-    background-color: #2c3e50;
+    background-color: var(--color-barra-lateral);
     color: white;
-    width: 210px;
+    width: 200px;
     height: 100vh;
-    padding: 20px;
+    padding: 30px 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 2px 0px 15px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 1000;
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease;
 }
 
 aside.sidebar.hidden {
@@ -32,37 +53,48 @@ aside.sidebar.visible {
     transform: translateX(0);
 }
 
+/* Logo */
 .logo img {
     width: 100%;
+    max-width: 180px;
     height: auto;
+    margin-bottom: 30px;
 }
 
+/* Menú de navegación */
 nav.menu {
-    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 nav.menu button {
-    background-color: #34495e;
-    color: white;
-    padding: 10px;
-    width: 100%;
-    margin-bottom: 10px;
+    background-color: var(--color-boton-menu);
+    color: #fff;
+    padding: 14px 20px;
     border: none;
-    cursor: pointer;
+    border-radius: 8px;
     font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition:
+        background-color 0.3s ease,
+        transform 0.3s ease;
+    margin-bottom: 12px;
+    text-align: left;
 }
 
 nav.menu button:hover {
-    background-color: #1abc9c;
+    background-color: var(--color-barra-hover);
+    transform: translateX(10px);
 }
 
 /* Contenido principal */
 main {
-    flex: 1;
-    padding: 20px;
+    margin-left: 240px;
+    padding: 40px 20px;
+    transition: margin-left 0.3s ease;
     background-color: #ffffff;
-    margin-left: 250px; /* Ajuste para que el contenido no quede cubierto por la barra lateral */
-    transition: margin-left 0.3s ease-in-out;
+    min-height: 100vh;
 }
 
 main.full-width {
@@ -70,77 +102,149 @@ main.full-width {
 }
 
 h1 {
+    font-size: 30px;
+    color: var(--color-titulo);
+    font-weight: 600;
     text-align: center;
-    color: #34495e;
+    margin-bottom: 30px;
 }
 
+/* Estilo para centrar el botón */
+.rcenter {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Espacio superior para el botón */
+}
+
+/* Estilo para centrar el botón */
+.rcenter {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Espacio superior para el botón */
+}
+
+/* Estilo del botón */
 a {
-    display: block;
-    text-align: center;
-    margin: 20px 0;
-    padding: 10px;
-    background-color: #1abc9c;
+    display: inline-block;
+    padding: 12px 20px;
+    background-color: var(--color-boton-agregar);
     color: white;
     text-decoration: none;
-    border-radius: 5px;
+    border-radius: 6px;
+    font-size: 18px;
+    transition:
+        background-color 0.3s ease,
+        transform 0.3s ease; /* Añadir transición de transformación */
+    text-align: center;
 }
 
+/* Efecto al pasar el cursor */
 a:hover {
-    background-color: #16a085;
+    background-color: var(--color-boton-agregar-hover);
+    animation: scaleUp 0.5s ease-out; /* Activar animación de agrandamiento más suave */
+}
+
+/* Animación para el efecto al pasar el cursor */
+@keyframes scaleUp {
+    0% {
+        transform: scale(1); /* Tamaño original */
+    }
+
+    100% {
+        transform: scale(1.05); /* Aumento leve de tamaño */
+    }
 }
 
 /* Estilo de la tabla */
 table {
     width: 100%;
-    max-width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
-    table-layout: fixed;
-    overflow-x: auto;
+    margin-top: 30px;
 }
 
-table, th, td {
-    border: 1px solid #ddd;
-}
-
-th, td {
-    padding: 12px;
-    text-align: left;
+th,
+td {
+    padding: 15px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 400;
 }
 
 th {
-    background-color: #2c3e50;
-    color: white;
+    background-color: var(--color-tabla-header);
+    color: var(--color-tabla-header-texto);
+    font-size: 16px;
 }
 
-tr:nth-child(even) {
-    background-color: #f9f9f9;
+td {
+    background-color: var(--color-tabla-fila-impar);
+    border-bottom: 1px solid #ddd;
 }
 
-tr:hover {
-    background-color: #f1f1f1;
+tr:nth-child(even) td {
+    background-color: var(--color-tabla-fila-par);
 }
 
+tr:hover td {
+    background-color: var(--color-tabla-hover);
+}
+
+/* Imagen de portada ocupando todo el recuadro */
 td img {
-    max-width: 50px;
+    width: 100%;
     height: auto;
+    max-height: 80px; /* Ajusta según el tamaño de la celda */
+    object-fit: cover;
+    border-radius: 5px;
 }
 
-.actions a, .actions button {
-    margin: 0 5px;
-    color: #3498db;
-    text-decoration: none;
-}
-
+/* Acciones en la tabla */
+.actions a,
 .actions button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: #e74c3c;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 14px;
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
 
-.actions a:hover, .actions button:hover {
-    color: #1abc9c;
+/* Estilo unificado de los botones */
+.actions a.ver {
+    color: var(--color-acciones-ver);
+}
+
+.actions a.editar {
+    color: var(--color-acciones-editar);
+}
+
+.actions button.eliminar {
+    background-color: var(--color-acciones-eliminar); /* Fondo con el color de eliminar */
+    color: white; /* Texto blanco */
+    border: none; /* Sin borde */
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    transition:
+        background-color 0.3s ease,
+        transform 0.3s ease;
+}
+
+/* Efecto hover para el botón "Eliminar" */
+.actions button.eliminar:hover {
+    background-color: #c0392b; /* Un tono más oscuro de rojo */
+    transform: scale(1.1); /* Efecto de agrandamiento al pasar el cursor */
+}
+
+/* Hover para todos los botones de acción */
+.actions a:hover,
+.actions button:hover {
+    color: var(--color-acciones-hover);
 }
 
 /* Botón hamburguesa */
@@ -148,17 +252,20 @@ td img {
     display: none;
     flex-direction: column;
     cursor: pointer;
-    margin: 20px;
+    position: absolute;
+    top: 30px;
+    right: 20px;
 }
 
 .hamburger div {
     width: 30px;
     height: 4px;
-    background-color: #333;
+    background-color: #ecf0f1;
     margin: 6px 0;
     transition: 0.4s;
 }
 
+/* Responsividad */
 @media screen and (max-width: 768px) {
     /* Mostrar el botón hamburguesa en pantallas pequeñas */
     .hamburger {
@@ -167,6 +274,11 @@ td img {
 
     /* Ocultar barra lateral cuando está oculta */
     aside.sidebar {
+        position: absolute;
+        top: 0;
+        left: -250px;
+        width: 100%;
+        padding: 20px;
         transform: translateX(-250px);
     }
 
@@ -174,24 +286,21 @@ td img {
         transform: translateX(0);
     }
 
-    /* Ajustar el contenido cuando la barra lateral está visible */
-    main.full-width {
-        margin-left: 0;
-    }
-
-    /* Ajustar la tabla para que se pueda desplazar horizontalmente */
-    table {
-        width: 100%;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    table, th, td {
-        border: 1px solid #ddd;
-    }
-
-    /* Ajustar el margen izquierdo del contenido principal */
     main {
         margin-left: 0;
+        padding: 20px;
+    }
+
+    table {
+        font-size: 12px;
+    }
+
+    th,
+    td {
+        padding: 12px;
+    }
+
+    h1 {
+        font-size: 28px;
     }
 }
