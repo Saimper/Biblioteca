@@ -25,13 +25,13 @@
             <% recursos.forEach(recurso => { %>
                 <tr>
                     <td><%= recurso.id %></td>
-                    <td><%= recurso.titulo %></td>
-                    <td><%= recurso.autor %></td>
-                    <td><%= recurso.categoria %></td>
+                    <td><%= recurso.title %></td>
+                    <td><%= recurso.author %></td>
+                    <td><%= recurso.category %></td>
                     <td><%= recurso.isbn %></td>
                     <td>
-                        <% if (recurso.imagen_portada) { %>
-                            <img src="/uploads/<%= recurso.imagen_portada %>" alt="Portada" width="50">
+                        <% if (recurso.image_path) { %>
+                            <img src="/uploads/<%= recurso.image_path %>" alt="Portada" width="50">
                         <% } %>
                     </td>
                     <td>

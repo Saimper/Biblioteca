@@ -5,112 +5,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Biblioteca</title>
     <link rel="stylesheet" href="/css/menu.css">
+ 
 </head>
 <body>
-    <aside class="sidebar">
-      <div class="logo">
-        <img class="logo" src="logo_cun.png" alt="cum" />
-      </div>
-      <nav class="menu">
-        <% if (user && user.role === 'bibliotecario') { %>
-            <button onclick="mostrarSeccion('alumnos')">Alumnos</button>
-            <button onclick="mostrarSeccion('recursos')">Recursos</button>
-            <button onclick="mostrarSeccion('reportes')">Reportes</button>
-        <% } else { %>
-            <p>No tienes permiso para acceder a este menú.</p>
-        <% } %>
-      </nav>
-    </aside>
 
-    <div class="container">
-      <% if (user && user.role === 'bibliotecario') { %>
-        <section id="alumnos" class="main-content" style="display: none">
-          <div class="form-container">
-            <h2>Alumnos</h2>
-            <form>
-              <label for="identificacion">Identificación:</label>
-              <input type="text" id="identificacion" placeholder="Ingrese identificación" />
-
-              <label for="nombre">Nombre:</label>
-              <input type="text" id="nombre" placeholder="Ingrese nombre" />
-
-              <label for="apellidos">Apellidos:</label>
-              <input type="text" id="apellidos" placeholder="Ingrese apellidos" />
-
-              <label for="programa-academico">Programa Académico:</label>
-              <input type="text" id="programa-academico" placeholder="Ingrese programa académico" />
-
-              <label for="telefono">Teléfono:</label>
-              <input type="text" id="telefono" placeholder="Ingrese teléfono" />
-
-              <button type="submit">Agregar Alumno</button>
-            </form>
-          </div>
-        </section>
-      <% } else if (user) { %>
-        <p>Acceso denegado a la sección de Alumnos.</p>
-      <% } %>
-
-      <section id="recursos" class="main-content" style="display: none">
-        <% if (user && user.role === 'bibliotecario') { %>
-          <div class="form-container">
-            <h2>Recursos</h2>
-            <!-- Formulario de creación de recurso -->
-            <form action="/recursos/create" method="POST" enctype="multipart/form-data">
-              <input type="text" name="title" placeholder="Título" required>
-              <input type="text" name="author" placeholder="Autor" required>
-              <input type="text" name="category" placeholder="Categoría" required>
-              <input type="text" name="isbn" placeholder="ISBN" required>
-              <input type="file" name="image_path" required> <!-- Campo para el archivo -->
-              <button type="submit">Crear Recurso</button>
-          </form>
-          
-          
-
-            <!-- Lista de recursos (ejemplo estático para visualización) -->
-          <h3>Lista de Recursos</h3>
-<ul>
-    <% if (recursos && recursos.length > 0) { %>
-        <% recursos.forEach(recurso => { %>
-            <li>
-                <strong>Título:</strong> <%= recurso.title %><br>
-                <strong>Autor:</strong> <%= recurso.author %><br>
-                <strong>Categoría:</strong> <%= recurso.category %><br>
-                <strong>ISBN:</strong> <%= recurso.isbn %><br>
-                <% if (recurso.image_path) { %>
-                    <img src="/public/uploads/<%= recurso.image_path %>" alt="Portada" width="100">   
-                <% } %>
-            </li>
-        <% }); %>
-    <% } else { %>
-        <li>No hay recursos disponibles.</li>
-    <% } %>
-</ul>
-
-          </div>
-        <% } else if (user) { %>
-          <p>Acceso denegado a la sección de Recursos.</p>
-        <% } %>
-      </section>
-
-      <section id="reportes" class="main-content" style="display: none">
-        <% if (user && user.role === 'bibliotecario') { %>
-          <h2>Reportes</h2>
-          <p>Aquí puedes generar reportes sobre los alumnos y recursos.</p>
-        <% } else if (user) { %>
-          <p>Acceso denegado a la sección de Reportes.</p>
-        <% } %>
-      </section>
+    <!-- Botón hamburguesa -->
+    <div class="hamburger" onclick="toggleSidebar()">
+        <div></div>
+        <div></div>
+        <div></div>
     </div>
 
+    <!-- Barra lateral -->
+    <aside class="sidebar">
+        <div class="logo">
+            <img src="logo_cun.png" alt="Logo CUN">
+        </div>
+        <nav class="menu">
+            <% if (user && user.role === 'bibliotecario') { %>
+                <button onclick="mostrarSeccion('alumnos')">Alumnos</button>
+                <button onclick="mostrarSeccion('recursos')">Recursos</button>
+                <button onclick="mostrarSeccion('reportes')">Reportes</button>
+            <% } else { %>
+                <p>No tienes permiso para acceder a este menú.</p>
+            <% } %>
+        </nav>
+    </aside>
+
+    <!-- Contenido principal -->
+    <main>
+        <h1>Lista de Recursos</h1>
+        <a href="/recursos/new">Agregar nuevo recurso</a>
+
+        <!-- Tabla de recursos -->
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Autor</th>
+                    <th>Categoría</th>
+                    <th>ISBN</th>
+                    <th>Portada</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% recursos.forEach(recurso => { %>
+                    <tr>
+                        <td><%= recurso.id %></td>
+                        <td><%= recurso.title %></td>
+                        <td><%= recurso.author %></td>
+                        <td><%= recurso.category %></td>
+                        <td><%= recurso.isbn %></td>
+                        <td>
+                            <% if (recurso.image_path) { %>
+                                <img src="/uploads/<%= recurso.image_path %>" alt="Portada">
+                            <% } %>
+                        </td>
+                        <td class="actions">
+                            <a href="/recursos/<%= recurso.id %>">Ver</a> |
+                            <a href="/recursos/<%= recurso.id %>/edit">Editar</a> |
+                            <form action="/recursos/<%= recurso.id %>/delete" method="POST" style="display:inline;">
+                                <button type="submit">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </main>
+
     <script>
-      function mostrarSeccion(seccion) {
-        const secciones = document.querySelectorAll('.main-content');
-        secciones.forEach((s) => {
-          s.style.display = 'none';
-        });
-        document.getElementById(seccion).style.display = 'block';
-      }
+        // Función para mostrar y ocultar la barra lateral
+        function toggleSidebar() {
+    const sidebar = document.querySelector('aside.sidebar');
+    const mainContent = document.querySelector('main');
+    sidebar.classList.toggle('visible');
+    mainContent.classList.toggle('full-width');
+}
+        function mostrarSeccion(seccion) {
+            const secciones = document.querySelectorAll('.main-content');
+            secciones.forEach((s) => {
+                s.style.display = 'none';
+            });
+            document.getElementById(seccion).style.display = 'block';
+        }
     </script>
+
 </body>
 </html>

@@ -1,69 +1,197 @@
+/* Estilos básicos */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-}
-
-.container {
+    padding: 0;
+    background-color: #f4f4f4;
     display: flex;
+    flex-direction: column;
 }
 
-.sidebar {
-    background-color: #007BFF;
+/* Barra lateral */
+aside.sidebar {
+    background-color: #2c3e50;
     color: white;
-    width: 200px;
-    padding: 15px;
-}
-
-.sidebar .logo {
-    text-align: center;
-}
-
-.menu button {
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-    margin: 10px 0;
-}
-
-.menu button:hover {
-    text-decoration: underline;
-}
-
-.main-content {
-    flex-grow: 1;
+    width: 250px;
+    height: 100vh;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    transition: transform 0.3s ease-in-out;
 }
 
-h2 {
-    margin-top: 0;
+aside.sidebar.hidden {
+    transform: translateX(-250px);
 }
 
-.form-container {
-    background: white;
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+aside.sidebar.visible {
+    transform: translateX(0);
 }
 
-input[type="text"] {
+.logo img {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    height: auto;
 }
 
-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007BFF;
+nav.menu {
+    margin-top: 20px;
+}
+
+nav.menu button {
+    background-color: #34495e;
     color: white;
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 10px;
     border: none;
-    border-radius: 4px;
     cursor: pointer;
+    font-size: 16px;
 }
 
-button:hover {
-    background-color: #0056b3;
+nav.menu button:hover {
+    background-color: #1abc9c;
+}
+
+/* Contenido principal */
+main {
+    flex: 1;
+    padding: 20px;
+    background-color: #ffffff;
+    margin-left: 250px; /* Ajuste para que el contenido no quede cubierto por la barra lateral */
+    transition: margin-left 0.3s ease-in-out;
+}
+
+main.full-width {
+    margin-left: 0;
+}
+
+h1 {
+    text-align: center;
+    color: #34495e;
+}
+
+a {
+    display: block;
+    text-align: center;
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #1abc9c;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+a:hover {
+    background-color: #16a085;
+}
+
+/* Estilo de la tabla */
+table {
+    width: 100%;
+    max-width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    table-layout: fixed;
+    overflow-x: auto;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #2c3e50;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+td img {
+    max-width: 50px;
+    height: auto;
+}
+
+.actions a, .actions button {
+    margin: 0 5px;
+    color: #3498db;
+    text-decoration: none;
+}
+
+.actions button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #e74c3c;
+}
+
+.actions a:hover, .actions button:hover {
+    color: #1abc9c;
+}
+
+/* Botón hamburguesa */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    margin: 20px;
+}
+
+.hamburger div {
+    width: 30px;
+    height: 4px;
+    background-color: #333;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+
+@media screen and (max-width: 768px) {
+    /* Mostrar el botón hamburguesa en pantallas pequeñas */
+    .hamburger {
+        display: flex;
+    }
+
+    /* Ocultar barra lateral cuando está oculta */
+    aside.sidebar {
+        transform: translateX(-250px);
+    }
+
+    aside.sidebar.visible {
+        transform: translateX(0);
+    }
+
+    /* Ajustar el contenido cuando la barra lateral está visible */
+    main.full-width {
+        margin-left: 0;
+    }
+
+    /* Ajustar la tabla para que se pueda desplazar horizontalmente */
+    table {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    table, th, td {
+        border: 1px solid #ddd;
+    }
+
+    /* Ajustar el margen izquierdo del contenido principal */
+    main {
+        margin-left: 0;
+    }
 }

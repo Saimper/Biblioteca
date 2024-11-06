@@ -15,15 +15,15 @@ exports.login = (req, res) => {
         const user = results[0];
         bcrypt.compare(password, user.password, (err, isMatch) => {
             if (isMatch) {
-                // Guarda el ID del usuario y el rol en la sesión solo después de la autenticación
+
                 req.session.userId = user.id;
                 req.session.role = user.role;
 
-                // Redirige según el rol
+           
                 if (user.role === 'usuario') {
-                    return res.redirect('/menu/user'); // Redirigir a /menu/user
+                    return res.redirect('/menu/user'); 
                 } else {
-                    return res.redirect('/menu'); // Redirigir a /menu para bibliotecarios
+                    return res.redirect('/menu'); 
                 }
             } else {
                 return res.status(401).send('Contraseña incorrecta');

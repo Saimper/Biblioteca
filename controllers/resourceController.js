@@ -15,27 +15,32 @@ exports.showCreateForm = (req, res) => {
 
 // Crear un recurso
 exports.createResource = (req, res) => {
-    // Imprimir los datos del cuerpo y el archivo
+    // Imprimir los datos del cuerpo y el archivo para depuración
     console.log('Datos del cuerpo:', req.body);
     console.log('Archivo:', req.file);
 
     const { title, author, category, isbn } = req.body;
     const image_path = req.file ? req.file.filename : null;
 
-    // Validación básica
+    // Validación básica de los campos
     if (!title || !author || !category || !isbn || !image_path) {
         return res.status(400).send('Todos los campos son requeridos.');
     }
 
+    // Inserción en la base de datos
     db.query(
         'INSERT INTO resources (title, author, category, isbn, image_path) VALUES (?, ?, ?, ?, ?)',
         [title, author, category, isbn, image_path],
         (err, results) => {
-            if (err) throw err;
+            if (err) {
+                console.error('Error en la consulta:', err);
+                return res.status(500).send('Hubo un error al crear el recurso.');
+            }
             res.redirect('/recursos');
         }
     );
 };
+
 
 
 // Mostrar un recurso específico
@@ -71,7 +76,7 @@ exports.updateResource = (req, res) => {
 
     db.query(query, params, (err) => {
         if (err) throw err;
-        res.redirect('/recursos/' + id + title + author + category + isbn + image_path);
+        res.redirect('/recursos/' + id);
     });
 };
 
