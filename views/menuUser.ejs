@@ -28,7 +28,7 @@
     <section id="recursos" class="main-content">
       <% if (user && user.role === 'usuario') { %>
         <div class="resources-container">
-          <h2>Recursos Disponibles</h2>
+          <h2>Recursos Disponibles y Reservados</h2>
           <table>
             <thead>
               <tr>
@@ -47,17 +47,22 @@
                   <td><%= recurso.author %></td>
                   <td><%= recurso.isbn %></td>
                   <td><%= recurso.status === 'disponible' ? 'Disponible' : 'Reservado' %></td>
-                  <td><% if (recurso.image_path) { %>
-                    <img src="/uploads/<%= recurso.image_path %>" alt="Portada">
-                <% } %></td>
+                  <td>
+                    <% if (recurso.image_path) { %>
+                      <img src="/uploads/<%= recurso.image_path %>" alt="Portada">
+                    <% } %>
+                  </td>
                   <td>
                     <% if (recurso.status === 'disponible') { %>
-                      <form action="/reservar-recurso/<%= recurso.id %>" method="POST">
+                      <!-- Botón para reservar el recurso -->
+                      <form action="/recursos/reservar-recurso/<%= recurso.id %>" method="POST">
                         <button type="submit">Reservar Recurso</button>
                       </form>
-                      
                     <% } else { %>
-                      <span>Reservado</span>
+                      <!-- Botón para cancelar la reserva del recurso -->
+                      <form action="/cancelar-reserva/<%= recurso.id %>" method="POST">
+                        <button type="submit">Cancelar Reserva</button>
+                      </form>
                     <% } %>
                   </td>
                 </tr>
@@ -69,6 +74,7 @@
         <p>Acceso denegado a la sección de Recursos.</p>
       <% } %>
     </section>
+    
     
     </div>
 

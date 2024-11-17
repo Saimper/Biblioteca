@@ -22,20 +22,30 @@ exports.showMenu = (req, res) => {
     });
 };
 
+// controllers/resourceController.js
+
+// controllers/resourceController.js
+
 exports.showMenuUser = (req, res) => {
     // Asegúrate de que el objeto `user` esté en la sesión o de donde provenga
     const user = {
         role: req.session.role // Obtén el rol del usuario desde la sesión
     };
-  
-    db.query("SELECT * FROM resources WHERE status = 'disponible'", (error, results) => {
-      if (error) {
-        console.error("Error al obtener recursos disponibles:", error);
-        return res.status(500).send("Error al cargar recursos");
-      }
-      // Pasa `user` y `recursosDisponibles` a la vista
-      res.render("menuUser", { user, recursosDisponibles: results });
+
+    // Consulta para obtener los recursos disponibles y reservados
+    db.query("SELECT * FROM resources", (error, results) => {
+        if (error) {
+            console.error("Error al obtener recursos:", error);
+            return res.status(500).send("Error al cargar recursos");
+        }
+
+        // Filtra los recursos en disponibles y reservados
+        const recursosDisponibles = results.filter(resource => resource.status === 'disponible');
+        const recursosReservados = results.filter(resource => resource.status === 'reservado');
+
+        // Pasa `user`, `recursosDisponibles`, y `recursosReservados` a la vista
+        res.render("menuUser", { user, recursosDisponibles, recursosReservados });
     });
-  };
-  
+};
+
 

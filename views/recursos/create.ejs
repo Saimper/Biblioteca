@@ -24,6 +24,13 @@
         <label for="imagen_portada">Imagen de Portada:</label>
         <input type="file" name="image_path" id="imagen_portada"><br>
 
+        <!-- Agregar el campo status -->
+        <label for="status">Estado:</label>
+        <select name="status" id="status" required>
+            <option value="Disponible">Disponible</option>
+            <option value="Reservado">Reservado</option>
+        </select><br>
+        
         <button type="submit">Agregar Recurso</button>
     </form>
 </body>

@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gestión de Biblioteca</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Open+Sans:wght@400;600&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/css/menu.css" />
+    <style>
+
+    </style>
   </head>
   <body>
     <!-- Botón hamburguesa -->
@@ -25,19 +25,11 @@
       </div>
       <nav class="menu">
         <% if (user && user.role === 'bibliotecario') { %>
-
-        <button onclick="mostrarSeccion('alumnos')">Alumnos</button>
-        <button onclick="mostrarSeccion('recursos')">Recursos</button>
-        <button onclick="mostrarSeccion('reportes')">Reportes</button>
-        <% } else { %>
-        <p>No tienes permiso para acceder a este menú.</p>
-
-          <button onclick="mostrarSeccion('alumnos')">Alumnos</button>
+          <button onclick="mostrarSeccion('alumnos')">Usuarios</button>
           <button onclick="mostrarSeccion('recursos')">Recursos</button>
           <button onclick="mostrarSeccion('reportes')">Reportes</button>
         <% } else { %>
           <p>No tienes permiso para acceder a este menú.</p>
-
         <% } %>
       </nav>
     </aside>
@@ -65,32 +57,6 @@
         </thead>
         <tbody>
           <% recursos.forEach(recurso => { %>
-
-          <tr>
-            <td><%= recurso.id %></td>
-            <td><%= recurso.title %></td>
-            <td><%= recurso.author %></td>
-            <td><%= recurso.category %></td>
-            <td><%= recurso.isbn %></td>
-            <td><%= recurso.status %></td>
-            <td>
-              <% if (recurso.image_path) { %>
-              <img src="/uploads/<%= recurso.image_path %>" alt="Portada" />
-              <% } %>
-            </td>
-            <td class="actions">
-              <a href="/recursos/<%= recurso.id %>">Ver</a> |
-              <a href="/recursos/<%= recurso.id %>/edit">Editar</a> |
-              <form
-                action="/recursos/<%= recurso.id %>/delete"
-                method="POST"
-                style="display: inline"
-              >
-                <button type="submit">Eliminar</button>
-              </form>
-            </td>
-          </tr>
-
             <tr>
               <td><%= recurso.id %></td>
               <td><%= recurso.title %></td>
@@ -111,11 +77,13 @@
                 </form>
               </td>
             </tr>
-
           <% }) %>
         </tbody>
       </table>
     </main>
+
+    <!-- Contenedor para el mensaje Toast -->
+    <div id="toast" class="toast"></div>
 
     <script>
       // Función para mostrar y ocultar la barra lateral
@@ -125,12 +93,37 @@
         sidebar.classList.toggle("visible");
         mainContent.classList.toggle("full-width");
       }
+
       function mostrarSeccion(seccion) {
         const secciones = document.querySelectorAll(".main-content");
         secciones.forEach((s) => {
           s.style.display = "none";
         });
         document.getElementById(seccion).style.display = "block";
+      }
+
+      // Mostrar el toast solo si la acción de eliminación fue exitosa
+      window.onload = function() {
+        // Verificar si se pasó el parámetro 'success' en la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const success = urlParams.get('success');
+
+        if (success === 'true') {
+          // Mostrar el mensaje toast solo si el parámetro success es true
+          showToast("¡Recurso eliminado con éxito!");
+        }
+      };
+
+      // Función para mostrar el toast
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.classList.add("show");
+
+        // Ocultar el toast después de 3 segundos
+        setTimeout(function() {
+          toast.classList.remove("show");
+        }, 3000);
       }
     </script>
   </body>

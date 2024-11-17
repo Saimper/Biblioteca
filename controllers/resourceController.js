@@ -36,7 +36,9 @@ exports.createResource = (req, res) => {
                 console.error('Error en la consulta:', err);
                 return res.status(500).send('Hubo un error al crear el recurso.');
             }
-            res.redirect('/recursos');
+            // Redirigir con mensaje de éxito
+            res.redirect('/menu');
+
         }
     );
 };
@@ -80,42 +82,58 @@ exports.updateResource = (req, res) => {
     });
 };
 
-// Eliminar un recurso
 exports.deleteResource = (req, res) => {
     const { id } = req.params;
     db.query('DELETE FROM resources WHERE id = ?', [id], (err) => {
-        if (err) throw err;
-        res.redirect('/recursos');
+        if (err) {
+            // En caso de error, redirige sin el parámetro success
+            res.redirect('/menu?error=true');
+        } else {
+            // Redirige solo cuando la eliminación fue exitosa
+            res.redirect('/menu?success=true');
+        }
     });
 };
+
 
 // controllers/resourceController.js
 
 // Función para reservar el recurso
+
 exports.reservarRecurso = (req, res) => {
-    const { id } = req.params; // Obtén el ID del recurso desde la URL
-  
-    // Verifica si el recursoId es válido
-    if (!id) {
-      return res.status(400).send("ID del recurso no proporcionado");
-    }
-  
-    // Consulta SQL para actualizar el estado del recurso a 'reservado'
-    const query = "UPDATE resources SET status = 'reservado' WHERE id = ?";
-  
-    db.query(query, [recursoId], (error, results) => {
+  const { id } = req.params;
+
+  // Consulta para actualizar el estado del recurso a "reservado"
+  db.query(
+    "UPDATE resources SET status = 'reservado' WHERE id = ?",
+    [id],
+    (error, results) => {
       if (error) {
         console.error("Error al reservar el recurso:", error);
         return res.status(500).send("Error al reservar el recurso");
       }
+      
+      // Redirige de vuelta a la página del menú del usuario después de la actualización
+      res.redirect('/menuUser');
+    }
+  );
+};
+
+exports.cancelarReserva = (req, res) => {
+    const { id } = req.params;
   
-      // Si la actualización fue exitosa, redirige a la lista de recursos
-      if (results.affectedRows === 0) {
-        return res.status(404).send("Recurso no encontrado");
+    // Cambia el estado a "disponible"
+    db.query(
+      "UPDATE resources SET status = 'disponible' WHERE id = ?",
+      [id],
+      (error, results) => {
+        if (error) {
+          console.error("Error al cancelar la reserva del recurso:", error);
+          return res.status(500).send("Error al cancelar la reserva");
+        }
+        res.redirect('/menuUser');
       }
-  
-      // Redirige a la lista de recursos después de reservarlo
-      res.redirect("/user/recursos");
-    });
+    );
   };
+
   
