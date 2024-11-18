@@ -87,7 +87,7 @@ exports.deleteResource = (req, res) => {
     db.query('DELETE FROM resources WHERE id = ?', [id], (err) => {
         if (err) {
             // En caso de error, redirige sin el parámetro success
-            res.redirect('/menu?error=true');
+            res.redirect('/?error=true');
         } else {
             // Redirige solo cuando la eliminación fue exitosa
             res.redirect('/menu?success=true');

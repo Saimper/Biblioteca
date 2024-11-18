@@ -6,8 +6,23 @@
     <title>Gestión de Biblioteca</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/css/menu.css" />
+    <!-- Incluir Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
+      /* Estilo para el ícono de LogOut */
+      .logout-icon {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 24px;
+        cursor: pointer;
+        color: #333;
+        transition: color 0.3s ease;
+      }
 
+      .logout-icon:hover {
+        color: #ff5c5c; /* Color de hover */
+      }
     </style>
   </head>
   <body>
@@ -25,9 +40,9 @@
       </div>
       <nav class="menu">
         <% if (user && user.role === 'bibliotecario') { %>
-          <button onclick="mostrarSeccion('alumnos')">Usuarios</button>
-          <button onclick="mostrarSeccion('recursos')">Recursos</button>
-          <button onclick="mostrarSeccion('reportes')">Reportes</button>
+          <a href="/usuarios">Usuarios</a>
+          <a href="/menu">Recursos</a>
+          <a href="/reportes">Reportes</a>
         <% } else { %>
           <p>No tienes permiso para acceder a este menú.</p>
         <% } %>
@@ -85,6 +100,11 @@
     <!-- Contenedor para el mensaje Toast -->
     <div id="toast" class="toast"></div>
 
+    <!-- Ícono de LogOut -->
+    <a href="/logout" class="logout-icon">
+      <i class="fas fa-sign-out-alt"></i>
+    </a>
+
     <script>
       // Función para mostrar y ocultar la barra lateral
       function toggleSidebar() {
@@ -104,23 +124,18 @@
 
       // Mostrar el toast solo si la acción de eliminación fue exitosa
       window.onload = function() {
-        // Verificar si se pasó el parámetro 'success' en la URL
         const urlParams = new URLSearchParams(window.location.search);
         const success = urlParams.get('success');
 
         if (success === 'true') {
-          // Mostrar el mensaje toast solo si el parámetro success es true
           showToast("¡Recurso eliminado con éxito!");
         }
       };
 
-      // Función para mostrar el toast
       function showToast(message) {
         const toast = document.getElementById("toast");
         toast.textContent = message;
         toast.classList.add("show");
-
-        // Ocultar el toast después de 3 segundos
         setTimeout(function() {
           toast.classList.remove("show");
         }, 3000);

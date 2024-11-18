@@ -14,7 +14,7 @@ const authorizeRole = (allowedRoles) => {
         if (req.session && allowedRoles.includes(req.session.role)) {
             return next();
         }
-        return res.status(403).send('Acceso denegado');
+        return res.status(403).send('Acceso denegado'); 
     };
 };
 

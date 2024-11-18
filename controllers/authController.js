@@ -44,6 +44,16 @@ exports.register = (req, res) => {
     });
 };
 
+exports.listUsers = (req, res) => {
+    User.findAll((err, users) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('Error al obtener la lista de usuarios');
+        }
+        res.render('user', { users }); // Renderiza el archivo user.ejs y pasa la lista de usuarios
+    });
+};
+
 // Cierre de sesión
 exports.logout = (req, res) => {
     req.session.destroy(err => {

@@ -4,34 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Nuevo Recurso</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/menu.css">
 </head>
 <body>
-    <h1>Agregar Nuevo Recurso</h1>
-    <form action="/recursos/create" method="POST" enctype="multipart/form-data">
-        <label for="titulo">Título:</label>
-        <input type="text" name="title" id="titulo" required><br>
+    <div class="container">
+        <h1>Agregar Nuevo Recurso</h1>
+        <form action="/recursos/create" method="POST" enctype="multipart/form-data" class="styled-form">
+            <div class="form-group">
+                <label for="titulo">Título:</label>
+                <input type="text" name="title" id="titulo" required>
+            </div>
 
-        <label for="autor">Autor:</label>
-        <input type="text" name="author" id="autor" required><br>
+            <div class="form-group">
+                <label for="autor">Autor:</label>
+                <input type="text" name="author" id="autor" required>
+            </div>
 
-        <label for="categoria">Categoría:</label>
-        <input type="text" name="category" id="categoria" required><br>
+            <div class="form-group">
+                <label for="categoria">Categoría:</label>
+                <input type="text" name="category" id="categoria" required>
+            </div>
 
-        <label for="isbn">ISBN:</label>
-        <input type="text" name="isbn" id="isbn"><br>
+            <div class="form-group">
+                <label for="isbn">ISBN:</label>
+                <input type="text" name="isbn" id="isbn">
+            </div>
 
-        <label for="imagen_portada">Imagen de Portada:</label>
-        <input type="file" name="image_path" id="imagen_portada"><br>
+            <div class="form-group">
+                <label for="imagen_portada">Imagen de Portada:</label>
+                <input type="file" name="image_path" id="imagen_portada">
+            </div>
 
-        <!-- Agregar el campo status -->
-        <label for="status">Estado:</label>
-        <select name="status" id="status" required>
-            <option value="Disponible">Disponible</option>
-            <option value="Reservado">Reservado</option>
-        </select><br>
-        
-        <button type="submit">Agregar Recurso</button>
-    </form>
+            <div class="form-group">
+                <label for="status">Estado:</label>
+                <select name="status" id="status" required>
+                    <option value="Disponible">Disponible</option>
+                    <option value="Reservado">Reservado</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-submit">Agregar Recurso</button>
+        </form>
+    </div>
 </body>
 </html>

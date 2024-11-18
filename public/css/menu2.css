@@ -1,0 +1,294 @@
+      /* Definición de colores en root */
+      :root {
+        --color-fondo: #f4f4f4;
+        --color-texto-principal: #333;
+        --color-barra-lateral: #2c3e50;
+        --color-barra-hover: #1abc9c;
+        --color-boton-menu: #34495e;
+        --color-titulo: #2c3e50;
+        --color-boton-agregar: #1abc9c;
+        --color-boton-agregar-hover: #16a085;
+        --color-tabla-header: #34495e;
+        --color-tabla-header-texto: white;
+        --color-tabla-fila-par: #ecf0f1;
+        --color-tabla-fila-impar: #f9f9f9;
+        --color-tabla-hover: #f1f1f1;
+        --color-acciones-ver: #3498db;
+        --color-acciones-editar: #f39c12;
+        --color-acciones-eliminar: #e74c3c;
+        --color-acciones-hover: #1abc9c;
+    }
+
+    /* Estilos básicos */
+    body {
+        font-family: "Roboto", sans-serif;
+        background-color: var(--color-fondo);
+        margin: 0;
+        padding: 0;
+        color: var(--color-texto-principal);
+    }
+
+    /* Barra lateral */
+    aside.sidebar {
+        background-color: var(--color-barra-lateral);
+        color: white;
+        width: 240px;
+        height: 100vh;
+        padding: 30px 20px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        box-shadow: 2px 0px 15px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.3s ease;
+    }
+
+    aside.sidebar.hidden {
+        transform: translateX(-250px);
+    }
+
+    aside.sidebar.visible {
+        transform: translateX(0);
+    }
+
+    /* Logo */
+    .logo img {
+        width: 100%;
+        max-width: 180px;
+        height: auto;
+        margin-bottom: 30px;
+    }
+
+    /* Menú de navegación */
+    nav.menu {
+        display: flex;
+        flex-direction: column;
+    }
+
+    nav.menu button {
+        background-color: var(--color-boton-menu);
+        color: #fff;
+        padding: 14px 20px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition:
+            background-color 0.3s ease,
+            transform 0.3s ease;
+        margin-bottom: 12px;
+        text-align: left;
+    }
+
+    nav.menu button:hover {
+        background-color: var(--color-barra-hover);
+        transform: translateX(10px);
+    }
+
+    /* Contenido principal */
+    main {
+        margin-left: 240px;
+        padding: 40px 20px;
+        transition: margin-left 0.3s ease;
+        background-color: #ffffff;
+        min-height: 100vh;
+    }
+
+    main.full-width {
+        margin-left: 0;
+    }
+
+    h1 {
+        font-size: 30px;
+        color: var(--color-titulo);
+        font-weight: 600;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    /* Estilo para centrar el botón */
+    .rcenter {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    /* Estilo del botón */
+    a {
+        display: inline-block;
+        padding: 12px 20px;
+        background-color: var(--color-boton-agregar);
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 18px;
+        transition:
+            background-color 0.3s ease,
+            transform 0.3s ease;
+        text-align: center;
+    }
+
+    /* Efecto al pasar el cursor */
+    a:hover {
+        background-color: var(--color-boton-agregar-hover);
+        animation: scaleUp 0.5s ease-out;
+    }
+
+    /* Animación para el efecto al pasar el cursor */
+    @keyframes scaleUp {
+        0% {
+            transform: scale(1);
+        }
+
+        100% {
+            transform: scale(1.05);
+        }
+    }
+
+    /* Estilo de la tabla */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 30px;
+    }
+
+    th,
+    td {
+        padding: 15px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: 400;
+    }
+
+    th {
+        background-color: var(--color-tabla-header);
+        color: var(--color-tabla-header-texto);
+        font-size: 16px;
+    }
+
+    td {
+        background-color: var(--color-tabla-fila-impar);
+        border-bottom: 1px solid #ddd;
+    }
+
+    tr:nth-child(even) td {
+        background-color: var(--color-tabla-fila-par);
+    }
+
+    tr:hover td {
+        background-color: var(--color-tabla-hover);
+    }
+
+    /* Imagen de portada ocupando todo el recuadro */
+    td img {
+        width: 100%;
+        height: auto;
+        max-height: 80px;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+    /* Acciones en la tabla */
+    .actions a,
+    .actions button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-weight: 500;
+        font-size: 14px;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .actions a.ver {
+        color: var(--color-acciones-ver);
+    }
+
+    .actions a.editar {
+        color: var(--color-acciones-editar);
+    }
+
+    .actions button.eliminar {
+        background-color: var(--color-acciones-eliminar);
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+        font-size: 14px;
+        transition:
+            background-color 0.3s ease,
+            transform 0.3s ease;
+    }
+
+    .actions button.eliminar:hover {
+        background-color: #c0392b;
+        transform: scale(1.1);
+    }
+
+    /* Hover para todos los botones de acción */
+    .actions a:hover,
+    .actions button:hover {
+        color: var(--color-acciones-hover);
+    }
+
+    /* Botón hamburguesa */
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        position: absolute;
+        top: 30px;
+        right: 20px;
+    }
+
+    .hamburger div {
+        width: 30px;
+        height: 4px;
+        background-color: #ecf0f1;
+        margin: 6px 0;
+        transition: 0.4s;
+    }
+
+    /* Responsividad */
+    @media screen and (max-width: 768px) {
+        /* Mostrar el botón hamburguesa en pantallas pequeñas */
+        .hamburger {
+            display: flex;
+        }
+
+        /* Ocultar barra lateral cuando está oculta */
+        aside.sidebar {
+            position: absolute;
+            top: 0;
+            left: -250px;
+            width: 100%;
+            padding: 20px;
+        }
+
+        /* Mostrar barra lateral cuando es visible */
+        aside.sidebar.visible {
+            left: 0;
+        }
+
+        main {
+            margin-left: 0;
+            padding: 20px;
+        }
+
+        /* Cambiar el diseño de la tabla */
+        table {
+            font-size: 12px;
+        }
+
+        th,
+        td {
+            padding: 10px;
+        }
+    }

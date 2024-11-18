@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const authRoutes = require('./routes/authRoutes');
 const menuRoutes = require('./routes/menuRoutes');
 const resourceRoutes = require('./routes/resourceRoutes');
+const userRoutes = require('./routes/userRoutes');
 const path = require('path');
 
 const app = express();
@@ -29,7 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/menu', menuRoutes);
 app.use('/menuUser', menuRoutes);
 app.use('/recursos', resourceRoutes);
-
+app.use('/', userRoutes);
 app.use('/', authRoutes);
 
 // Iniciar el servidor
