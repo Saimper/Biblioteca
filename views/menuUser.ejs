@@ -91,7 +91,7 @@
                           </td>
                           <td>
                               <% if (recurso.status === 'Disponible') { %>
-                                <a href="/recursos/<%= recurso.id %>">Ver</a> |
+                                <a href="/recursos/<%= recurso.id %>/user">Ver</a> |
                                   <form action="/recursos/reservar-recurso/<%= recurso.id %>" method="POST">
                                       <button type="submit">Reservar Recurso</button>
                                   </form>

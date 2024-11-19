@@ -8,26 +8,26 @@ exports.getAllResources = (req, res) => {
     });
 };
 
-// Mostrar formulario de creación
+
 exports.showCreateForm = (req, res) => {
     res.render('recursos/create');
 };
 
 // Crear un recurso
 exports.createResource = (req, res) => {
-    // Imprimir los datos del cuerpo y el archivo para depuración
+ 
     console.log('Datos del cuerpo:', req.body);
     console.log('Archivo:', req.file);
 
     const { title, author, category, isbn, status } = req.body;
     const image_path = req.file ? req.file.filename : null;
 
-    // Validación básica de los campos
+ 
     if (!title || !author || !category || !isbn || !image_path|| !status) {
         return res.status(400).send('Todos los campos son requeridos.');
     }
 
-    // Inserción en la base de datos
+ 
     db.query(
         'INSERT INTO resources (title, author, category, isbn, image_path, status) VALUES (?, ?, ?, ?, ?, ?)',
         [title, author, category, isbn, image_path, status],
@@ -51,6 +51,15 @@ exports.getResource = (req, res) => {
     db.query('SELECT * FROM resources WHERE id = ?', [id], (err, results) => {
         if (err) throw err;
         res.render('recursos/show', { recurso: results[0] });
+    });
+};
+
+// Mostrar un recurso específico
+exports.getResourceUser = (req, res) => {
+    const { id } = req.params;
+    db.query('SELECT * FROM resources WHERE id = ?', [id], (err, results) => {
+        if (err) throw err;
+        res.render('recursos/showUser', { recurso: results[0] });
     });
 };
 

@@ -13,12 +13,11 @@
     <h1>Detalles del Recurso</h1>
     <div class="recurso-detail">
         <div class="recurso-info">
-            <p><strong>Título:</strong> Time</p>
-            <p><strong>Autor:</strong> Joe</p>
-            <p><strong>Categoría:</strong> da</p>
-            <p><strong>ISBN:</strong> 1234</p>
-            <p><strong>Estado:</strong> 1234</p>
-            <p><strong>Imagen de Portada:</strong></p>
+            <p><strong>Título:</strong><%= recurso.title %></p>
+            <p><strong>Autor:</strong><%= recurso.author %></p>
+            <p><strong>Categoría:</strong><%= recurso.category %></p>
+            <p><strong>ISBN:</strong><%= recurso.isbn %></p>
+            <p><strong>Estado:</strong><%= recurso.status %></p>
         </div>
         
         <% if (recurso.image_path) { %>
@@ -28,7 +27,7 @@
     
     <!-- Botón centrado -->
     <div style="text-align: center;">
-        <a href="/menu/user" class="btn btn-primary">Volver al Menú</a>
+        <a href="/menu"class="btn btn-primary">Volver al Menú</a>
     </div>
 </body>
 </html>
