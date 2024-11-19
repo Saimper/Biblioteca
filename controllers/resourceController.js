@@ -99,25 +99,25 @@ exports.deleteResource = (req, res) => {
 // controllers/resourceController.js
 
 // Función para reservar el recurso
-
 exports.reservarRecurso = (req, res) => {
-  const { id } = req.params;
-
-  // Consulta para actualizar el estado del recurso a "reservado"
-  db.query(
-    "UPDATE resources SET status = 'reservado' WHERE id = ?",
-    [id],
-    (error, results) => {
-      if (error) {
-        console.error("Error al reservar el recurso:", error);
-        return res.status(500).send("Error al reservar el recurso");
+    const { id } = req.params;
+  
+    // Consulta para actualizar el estado del recurso a "reservado"
+    db.query(
+      "UPDATE resources SET status = 'reservado' WHERE id = ?",
+      [id],
+      (error, results) => {
+        if (error) {
+          console.error("Error al reservar el recurso:", error);
+          return res.status(500).send("Error al reservar el recurso");
+        }
+        
+        // Redirige de vuelta a la página del menú del usuario después de la actualización con un parámetro success=true
+        res.redirect('/menu/user?success=true');
       }
-      
-      // Redirige de vuelta a la página del menú del usuario después de la actualización
-      res.redirect('/menu/user');
-    }
-  );
-};
+    );
+  };
+  
 
 exports.cancelarReserva = (req, res) => {
     const { id } = req.params;

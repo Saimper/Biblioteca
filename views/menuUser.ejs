@@ -6,6 +6,39 @@
     <title>Gestión de Biblioteca</title>
     <link rel="stylesheet" href="/css/menuUser.css">
 </head>
+<style>
+  .toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    display: none;
+    z-index: 1000;
+  }
+
+  .toast.show {
+    display: block;
+    animation: fadeInOut 3s ease-in-out;
+  }
+
+  @keyframes fadeInOut {
+    0% {
+      opacity: 0;
+    }
+    10%, 90% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+</style>
+
 <body>
     <aside class="sidebar">
       <div class="logo">
@@ -31,7 +64,7 @@
 <% console.log("Recursos Reservados:", recursosReservados); %>
       <% if (user && user.role === 'usuario') { %>
         <div class="resources-container">
-          <h2>Recursos Disponibles y Reservados</h2>
+          <h2>Recursos Disponibles</h2>
           <table>
             <thead>
               <tr>
@@ -58,6 +91,7 @@
                           </td>
                           <td>
                               <% if (recurso.status === 'Disponible') { %>
+                                <a href="/recursos/<%= recurso.id %>">Ver</a> |
                                   <form action="/recursos/reservar-recurso/<%= recurso.id %>" method="POST">
                                       <button type="submit">Reservar Recurso</button>
                                   </form>
@@ -66,7 +100,9 @@
                                       <button type="submit">Cancelar Reserva</button>
                                   </form>
                               <% } %>
+                             
                           </td>
+                     
                       </tr>
                   <% }) %>
               <% } else { %>
@@ -83,6 +119,7 @@
     
     
     </div>
+    <div id="toast" class="toast"></div>
 
     <script>
       function mostrarSeccion(seccion) {
@@ -92,6 +129,23 @@
         });
         document.getElementById(seccion).style.display = 'block';
       }
+      window.onload = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const success = urlParams.get('success');
+
+    if (success === 'true') {
+      showToast("¡Recurso reservado con éxito!");
+    }
+  };
+
+  function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.classList.add("show");
+    setTimeout(function() {
+      toast.classList.remove("show");
+    }, 3000); // El toast desaparecerá después de 3 segundos
+  }
     </script>
 </body>
 </html>
