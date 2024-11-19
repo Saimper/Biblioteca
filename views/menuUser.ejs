@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Biblioteca</title>
-    <link rel="stylesheet" href="/css/menu.css">
+    <link rel="stylesheet" href="/css/menuUser.css">
 </head>
 <body>
     <aside class="sidebar">
       <div class="logo">
-        <img class="logo" src="../public/logo cun.png" alt="cun" />
+        <img class="logo" src="/logo cun.png" alt="cun" />
       </div>
       <nav class="menu">
         <% if (user && user.role === 'usuario') { %>
@@ -26,6 +26,9 @@
   
 
     <section id="recursos" class="main-content">
+
+      <% console.log("Recursos Disponibles:", recursosDisponibles); %>
+<% console.log("Recursos Reservados:", recursosReservados); %>
       <% if (user && user.role === 'usuario') { %>
         <div class="resources-container">
           <h2>Recursos Disponibles y Reservados</h2>
@@ -41,33 +44,36 @@
               </tr>
             </thead>
             <tbody>
-              <% recursosDisponibles.forEach((recurso) => { %>
-                <tr>
-                  <td><%= recurso.title %></td>
-                  <td><%= recurso.author %></td>
-                  <td><%= recurso.isbn %></td>
-                  <td><%= recurso.status === 'disponible' ? 'Disponible' : 'Reservado' %></td>
-                  <td>
-                    <% if (recurso.image_path) { %>
-                      <img src="/uploads/<%= recurso.image_path %>" alt="Portada">
-                    <% } %>
-                  </td>
-                  <td>
-                    <% if (recurso.status === 'disponible') { %>
-                      <!-- Botón para reservar el recurso -->
-                      <form action="/recursos/reservar-recurso/<%= recurso.id %>" method="POST">
-                        <button type="submit">Reservar Recurso</button>
-                      </form>
-                    <% } else { %>
-                      <!-- Botón para cancelar la reserva del recurso -->
-                      <form action="/cancelar-reserva/<%= recurso.id %>" method="POST">
-                        <button type="submit">Cancelar Reserva</button>
-                      </form>
-                    <% } %>
-                  </td>
-                </tr>
-              <% }) %>
-            </tbody>
+              <% if (recursosDisponibles.length > 0) { %>
+                  <% recursosDisponibles.forEach((recurso) => { %>
+                      <tr>
+                          <td><%= recurso.title %></td>
+                          <td><%= recurso.author %></td>
+                          <td><%= recurso.isbn %></td>
+                          <td><%= recurso.status === 'Disponible' ? 'Disponible' : 'Reservado' %></td>
+                          <td>
+                              <% if (recurso.image_path) { %>
+                                  <img src="/uploads/<%= recurso.image_path %>" alt="Portada" width="100" />
+                              <% } %>
+                          </td>
+                          <td>
+                              <% if (recurso.status === 'Disponible') { %>
+                                  <form action="/recursos/reservar-recurso/<%= recurso.id %>" method="POST">
+                                      <button type="submit">Reservar Recurso</button>
+                                  </form>
+                              <% } else { %>
+                                  <form action="/cancelar-reserva/<%= recurso.id %>" method="POST">
+                                      <button type="submit">Cancelar Reserva</button>
+                                  </form>
+                              <% } %>
+                          </td>
+                      </tr>
+                  <% }) %>
+              <% } else { %>
+                  <tr><td colspan="6">No hay recursos disponibles</td></tr>
+              <% } %>
+          </tbody>
+          
           </table>
         </div>
       <% } else if (bibliotecario) { %>

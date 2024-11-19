@@ -114,7 +114,7 @@ exports.reservarRecurso = (req, res) => {
       }
       
       // Redirige de vuelta a la página del menú del usuario después de la actualización
-      res.redirect('/menuUser');
+      res.redirect('/menu/user');
     }
   );
 };

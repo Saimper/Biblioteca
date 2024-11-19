@@ -39,9 +39,11 @@ exports.showMenuUser = (req, res) => {
             return res.status(500).send("Error al cargar recursos");
         }
 
+        console.log("Resultados de la consulta:", results);
+
         // Filtra los recursos en disponibles y reservados
-        const recursosDisponibles = results.filter(resource => resource.status === 'disponible');
-        const recursosReservados = results.filter(resource => resource.status === 'reservado');
+        const recursosDisponibles = results.filter(resource => resource.status === 'Disponible');
+        const recursosReservados = results.filter(resource => resource.status === 'Reservado');
 
         // Pasa `user`, `recursosDisponibles`, y `recursosReservados` a la vista
         res.render("menuUser", { user, recursosDisponibles, recursosReservados });
