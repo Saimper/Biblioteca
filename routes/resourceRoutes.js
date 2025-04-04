@@ -40,3 +40,19 @@
     router.post('/cancelar-reserva/:id', resourceController.cancelarReserva);
 
     module.exports = router;
+
+
+
+    // Rutas
+    router.get('/', resourceController.getAllResources);
+    router.get('/new', resourceController.showCreateForm);
+    router.post('/create', upload.single('image_path'), handleMulterError, resourceController.createResource);
+    router.get('/:id', resourceController.getResource);
+    router.get('/:id/user', resourceController.getResourceUser);
+    router.get('/:id/edit', resourceController.showEditForm);
+    router.post('/:id/update', upload.single('image_path'), resourceController.updateResource);
+    router.post('/:id/delete', resourceController.deleteResource);
+    router.post('/reservar-recurso/:id', resourceController.reservarRecurso);
+    router.post('/cancelar-reserva/:id', resourceController.cancelarReserva);
+
+    module.exports = router;
